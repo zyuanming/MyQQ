@@ -1,9 +1,9 @@
 package org.yuanming.chat;
 
-public class Teset
+public class MainClient
 {
     public static void main(String[] args)
     {
-        System.out.println("hello world");
+        new ClientLogin();
     }
 }

@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -22,19 +26,22 @@ import javax.swing.border.TitledBorder;
  * @author 1
  *
  */
-class Server extends JFrame implements ActionListener
+public class ServerListener extends JFrame implements ActionListener
 {
    
-    JList onlineList;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     JButton button;
-    JTextField text;
-    JTextArea area;
+    JTextField text;         //端口号
+    JTextArea area;          //当前在线用户
     JLabel label;
     
-    public Server()
+    public ServerListener()
     {
         super("服务器");
-        onlineList = new JList();
+        area = new JTextArea();
         text = new JTextField(10);
         button = new JButton("开始监听");
         label = new JLabel("停止中");
@@ -70,7 +77,7 @@ class Server extends JFrame implements ActionListener
         /**
          * 在线用户列表的显示
          */
-        JScrollPane jscroll = new JScrollPane(onlineList);
+        JScrollPane jscroll = new JScrollPane(area);
         jscroll.setBorder(BorderFactory.createTitledBorder(null, "在线用户列表", 
                 TitledBorder.DEFAULT_JUSTIFICATION, 
                 TitledBorder.DEFAULT_POSITION, 
@@ -96,24 +103,41 @@ class Server extends JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        
+       String str = new String(text.getText());
+       //String[] str_array = str.split()
+       /*if(str.contains("1234567890"))
+       {*/
+           int port_number = Integer.parseInt(str);
+           if(port_number > 0 && port_number <= 65535)
+           {
+               try
+               {
+                   this.label.setText("监听中");
+                   this.button.setText("停止服务器");
+                   this.button.setEnabled(false);  
+                   ServerSocket serverSocket = new ServerSocket(port_number);
+                   while(true)
+                   {
+                       Socket socket = serverSocket.accept();
+                       new ServerInputThread(socket, this).start();
+                   }
+               }
+               catch (IOException e1)
+               {
+                   e1.printStackTrace();
+               }
+           }
+          /* else
+           {
+               //new JDialog(this, "只能是0到65535的数字之间");
+               JOptionPane.showMessageDialog( null,"只能是0到65535的数字之间!");
+           }
+           
+       }
+       else
+       {
+           //new JDialog(this, "只能是0到65535的数字之间");
+           JOptionPane.showMessageDialog( null,"只能是0到65535的数字之间!");
+       }*/
     }
 }
-
-public class ServerListener
-{
-    public static void main(String[] args)
-    {
-        new Server();
-    }
-}
-
-
-
-
-
-
-
-  
-  
-
