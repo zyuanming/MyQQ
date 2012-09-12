@@ -35,8 +35,6 @@ public class User extends JFrame
     
     public User(Socket socket,String user_name)
     {
-        
-       //this.socket = socket;
         user_name_list.add(user_name);
         new ClientOutputThread(socket, this).start();
         new ClientInputThread(socket, this).start();

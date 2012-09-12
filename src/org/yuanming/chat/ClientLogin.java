@@ -23,7 +23,6 @@ import javax.swing.border.TitledBorder;
 
 public class ClientLogin extends JFrame
 {
-
     /**
      * 
      */
@@ -69,7 +68,6 @@ public class ClientLogin extends JFrame
         setVisible(true);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
     }
 }
 
@@ -86,11 +84,11 @@ class loginAction implements ActionListener
         try
         {
             String str = new String(clientLogin.port_field.getText());
-            if(str.contains("1234567890"))
-            {
+            //if(str.contains("1234567890"))
+            //{
                 int port_number = Integer.parseInt(str);
-                if(port_number > 0 && port_number <= 65535)
-                {
+                //if(port_number > 0 && port_number <= 65535)
+                //{
                     try
                     {
                         Socket socket = new Socket("192.168.1.100", port_number);
@@ -108,15 +106,15 @@ class loginAction implements ActionListener
                         
                         f.writeTo(os);
                         
-                        f.close();
-                        os.close();
-                        System.exit(0);  
+                        //f.close();
+                        //os.close();
+                        //System.exit(0);  
                     }
                     catch (IOException e1)
                     {
                         e1.printStackTrace();
                     }
-                }
+               /* }
                 else
                 {
                     //new JDialog(this, "只能是0到65535的数字之间");
@@ -128,7 +126,7 @@ class loginAction implements ActionListener
             {
                 //new JDialog(this, "只能是0到65535的数字之间");
                 JOptionPane.showMessageDialog( null,"只能是0到65535的数字之间!");
-            }
+            }*/
         }
         catch (NumberFormatException e1)
         {

@@ -13,6 +13,7 @@ public class ClientInputThread extends Thread
     public ClientInputThread(Socket socket, User user)
     {
         this.socket = socket;
+        this.user = user;
     }
 
     @Override
